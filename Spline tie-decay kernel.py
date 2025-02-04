@@ -1,15 +1,15 @@
 import sympy as sp
 
-ta, h, e1, e2, a, b = sp.symbols('t_a h epsilon_1 epsilon_2 a b')
-vector = sp.Matrix([a,e1,b,e2])#at time ta, the weight takes value a
+ta, h, e1, e2, a, k = sp.symbols('t_a h epsilon_1 epsilon_2 a k')
+vector = sp.Matrix([a,e1,k,e2])#at time ta, the weight takes value a
 matrix = sp.Matrix([[ta**3, ta**2, ta, 1],
                     [3*(ta**2), 2*ta, 1, 0],
                     [(ta+h)**3,(ta+h)**2,ta+h,1],
                     [3*(ta+h)**2,2*(ta+h),1,0]])
-coeff1 = sp.lambdify([a,h,b,e1,e2],matrix.solve(vector)[0])
-coeff2 = sp.lambdify([a,h,ta,b,e1,e2],matrix.solve(vector)[1])
-coeff3 = sp.lambdify([a,h,ta,b,e1,e2],matrix.solve(vector)[2])
-coeff4 = sp.lambdify([a,h,ta,b,e1,e2],matrix.solve(vector)[3])
+coeff1 = sp.lambdify([a,h,k,e1,e2],matrix.solve(vector)[0])
+coeff2 = sp.lambdify([a,h,ta,k,e1,e2],matrix.solve(vector)[1])
+coeff3 = sp.lambdify([a,h,ta,k,e1,e2],matrix.solve(vector)[2])
+coeff4 = sp.lambdify([a,h,ta,k,e1,e2],matrix.solve(vector)[3])
 
 class CubicSpline:
     
@@ -25,10 +25,10 @@ class CubicSpline:
         a = self.init_val
         h = self.step_size
         ta = self.init_time
-        b = self.fin_val
+        k = self.fin_val
         e1 = self.init_deriv
         e2 = self.fin_deriv
-        return coeff1(a,h,b,e1,e2)*(t**3) + coeff2(a,h,ta,b,e1,e2)*(t**2) + coeff3(a,h,ta,b,e1,e2)*t + coeff4(a,h,ta,b,e1,e2)
+        return coeff1(a,h,k,e1,e2)*(t**3) + coeff2(a,h,ta,k,e1,e2)*(t**2) + coeff3(a,h,ta,k,e1,e2)*t + coeff4(a,h,ta,k,e1,e2)
 
 class ExponentialDecay(CubicSpline):
     
@@ -39,10 +39,10 @@ class ExponentialDecay(CubicSpline):
         a = self.init_val
         h = self.step_size
         ta = self.init_time
-        b = self.fin_val
+        k = self.fin_val
         e1 = self.init_deriv
         e2 = self.fin_deriv
-        self.recent_val = CubicSpline(a,h,ta,b,e1,e2).polynomial(next_in_time)
+        self.recent_val = CubicSpline(a,h,ta,k,e1,e2).polynomial(next_in_time)
         
     def decay(self,t):
         return self.recent_val*sp.exp(self.alpha*self.next_in_time)*sp.exp(-self.alpha*t)
