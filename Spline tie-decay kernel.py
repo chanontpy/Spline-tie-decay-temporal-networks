@@ -1,14 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import sympy as sp
-
-
-# In[ ]:
-
 
 ta, h, e1, e2, a, b = sp.symbols('t_a h epsilon_1 epsilon_2 a b')
 vector = sp.Matrix([a,e1,b,e2])#at time ta, the weight takes value a
@@ -42,18 +32,17 @@ class CubicSpline:
 
 class ExponentialDecay(CubicSpline):
     
-    def __init__(self,init_val,step_size,init_time,fin_val,init_deriv,fin_deriv,alpha,change_in_time):
+    def __init__(self,init_val,step_size,init_time,fin_val,init_deriv,fin_deriv,alpha,next_in_time):
         super().__init__(init_val,step_size,init_time,fin_val,init_deriv,fin_deriv)
         self.alpha = alpha
-        self.change_in_time = change_in_time
+        self.next_in_time = next_in_time
         a = self.init_val
         h = self.step_size
         ta = self.init_time
         b = self.fin_val
         e1 = self.init_deriv
         e2 = self.fin_deriv
-        self.recent_val = CubicSpline(a,h,ta,b,e1,e2).polynomial(change_in_time)
+        self.recent_val = CubicSpline(a,h,ta,b,e1,e2).polynomial(next_in_time)
         
     def decay(self,t):
-        return self.recent_val*sp.exp(self.alpha*self.change_in_time)*sp.exp(-self.alpha*t)
-
+        return self.recent_val*sp.exp(self.alpha*self.next_in_time)*sp.exp(-self.alpha*t)
