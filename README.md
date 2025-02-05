@@ -4,7 +4,10 @@ This repository provides the codes for constructing kernel functions of spline t
 [Chanon Thongprayoon, Naoki Masuda. Preprint arXiv:2408.11913](https://arxiv.org/abs/2408.11913).
 
 ## Python package dependency
-- `import sympy as sp`
+Run
+```R
+`import sympy as sp`
+```
 
 ## Variable set up
 - `ta`: event arrival time
