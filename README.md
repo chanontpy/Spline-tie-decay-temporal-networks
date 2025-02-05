@@ -1,6 +1,6 @@
-# Spline-tie-decay-temporal-networks
+# Spline tie-decay temporal networks
 
-This repository provides the codes for constructing a kernel function in [Spline tie-decay temporal networks](https://arxiv.org/abs/2408.11913)
+This repository provides the codes for constructing kernel functions of spline tie-decay networks used in [Chanon Thongprayoon, Naoki Masuda. Preprint arXiv:2408.11913](https://arxiv.org/abs/2408.11913)
 
 ## Python packages
 - `import sympy as sp`
